@@ -16,58 +16,58 @@
 
 // CODE:
 const moveDoor = (position, direction, moving, output) => {
-	if (!moving) {
-		// if the door isn't moving, just add current position to the output
-		return {
-			position: position, 
-			direction: direction, 
-			moving: moving, 
-			output: output += String(position)
-		};
-	} else if (((position == 5 && direction == 1) || (position == 0 && direction == -1)) && moving) {
-		// if the door reached full open or closed via movement, change direction and stop movement
-		return { 
-			position: position, 
-			direction: direction / -1, 
-			moving: !moving, 
-			output: output += String(position) 
-		};
-	} else {
-		// if the door is just continuing on it's current path, just update it's position and output
-		return { 
-			position: position + direction, 
-			direction: direction, 
-			moving: moving, 
-			output: output += String(position + direction) 
-		};
-	}
+  if (!moving) {
+    // if the door isn't moving, just add current position to the output
+    return {
+      position: position, 
+      direction: direction, 
+      moving: moving, 
+      output: output += String(position)
+    };
+  } else if (((position == 5 && direction == 1) || (position == 0 && direction == -1)) && moving) {
+    // if the door reached full open or closed via movement, change direction and stop movement
+    return { 
+      position: position, 
+      direction: direction / -1, 
+      moving: !moving, 
+      output: output += String(position) 
+    };
+  } else {
+    // if the door is just continuing on it's current path, just update it's position and output
+    return { 
+      position: position + direction, 
+      direction: direction, 
+      moving: moving, 
+      output: output += String(position + direction) 
+    };
+  }
 };
 
 const handleInput = (input, position, direction, moving, output) => {
-	if (input == 'P') {
-		// button input: maintains the same direction, but alters its moving status
-		return moveDoor(position, direction, !moving, output);
-	} else if (input == 'O' && moving) {
-		// hit something while moving: alters the direction, but maintains the moving status
-		return moveDoor(position, direction / -1, moving, output);
-	} else {
-		// no input, or erroneous O input while not moving: does not alter direciton or moving status
-		return moveDoor(position, direction, moving, output);
-	}
+  if (input == 'P') {
+    // button input: maintains the same direction, but alters its moving status
+    return moveDoor(position, direction, !moving, output);
+  } else if (input == 'O' && moving) {
+    // hit something while moving: alters the direction, but maintains the moving status
+    return moveDoor(position, direction / -1, moving, output);
+  } else {
+    // no input, or erroneous O input while not moving: does not alter direciton or moving status
+    return moveDoor(position, direction, moving, output);
+  }
 };
 
 const garageDoorFunction = commands => {
-	let output = '';
-	let position = 0; // 0 == fully closed, 5 == fully open
-	let direction = 1; // 1 == opening, -1 == closing
-	let moving = false;
-	const inputs = [...commands];
-	
-	inputs.forEach(input => {
-		({ position, direction, moving, output } = handleInput(input, position, direction, moving, output));
-	});
-	
-	return output;
+  let output = '';
+  let position = 0; // 0 == fully closed, 5 == fully open
+  let direction = 1; // 1 == opening, -1 == closing
+  let moving = false;
+  const inputs = [...commands];
+  
+  inputs.forEach(input => {
+    ({ position, direction, moving, output } = handleInput(input, position, direction, moving, output));
+  });
+  
+  return output;
 };
 
 
